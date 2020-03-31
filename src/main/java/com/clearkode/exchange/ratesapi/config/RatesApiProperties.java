@@ -1,4 +1,4 @@
-package com.clearkode.exchange.ratesapi;
+package com.clearkode.exchange.ratesapi.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

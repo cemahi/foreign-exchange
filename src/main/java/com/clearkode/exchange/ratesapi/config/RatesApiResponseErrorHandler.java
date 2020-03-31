@@ -1,5 +1,6 @@
-package com.clearkode.exchange.ratesapi;
+package com.clearkode.exchange.ratesapi.config;
 
+import com.clearkode.exchange.ratesapi.config.RatesApiException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

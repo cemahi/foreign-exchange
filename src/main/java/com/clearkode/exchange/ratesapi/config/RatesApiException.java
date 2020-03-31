@@ -1,4 +1,4 @@
-package com.clearkode.exchange.ratesapi;
+package com.clearkode.exchange.ratesapi.config;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpServerErrorException;

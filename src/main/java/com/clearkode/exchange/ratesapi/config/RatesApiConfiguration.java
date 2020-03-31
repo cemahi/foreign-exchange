@@ -1,5 +1,6 @@
-package com.clearkode.exchange.ratesapi;
+package com.clearkode.exchange.ratesapi.config;
 
+import com.clearkode.exchange.service.RatesApiService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -18,7 +19,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 import java.util.Collections;
 
 @Slf4j

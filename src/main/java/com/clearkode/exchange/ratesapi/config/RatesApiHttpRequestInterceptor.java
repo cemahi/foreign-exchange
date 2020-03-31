@@ -1,4 +1,4 @@
-package com.clearkode.exchange.ratesapi;
+package com.clearkode.exchange.ratesapi.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

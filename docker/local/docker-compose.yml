@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  exchange-postgresql:
+    image: postgres:11.5-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=exchange
+    volumes:
+      - exchange-postgres-data:/var/lib/postgresql/data
+
+
+volumes:
+  exchange-postgres-data:

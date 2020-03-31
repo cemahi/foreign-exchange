@@ -1,5 +1,6 @@
-package com.clearkode.exchange.ratesapi;
+package com.clearkode.exchange.service;
 
+import com.clearkode.exchange.ratesapi.config.RatesApiException;
 import com.clearkode.exchange.ratesapi.request.ExchangeCurrencyRequest;
 import com.clearkode.exchange.ratesapi.response.ExchangeCurrencyResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.Currency;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,5 +23,4 @@ public class RatesApiService {
 
         return response;
     }
-
 }
