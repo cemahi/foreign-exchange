@@ -28,15 +28,8 @@ public class RatesApiHttpRequestInterceptor implements ClientHttpRequestIntercep
 
         ClientHttpResponse response = execution.execute(request, body);
 
-        String respBody = null;
-        try {
-            if (null != response.getBody())
-                respBody = StreamUtils.copyToString(response.getBody(), Charset.defaultCharset());
-        } catch (Exception ex) {
-        }
-
         if (log.isInfoEnabled()) {
-            log.error("[Response] [{}], Headers : [{}], Body : [{}] ", response.getStatusCode(), response.getHeaders(), respBody);
+            log.error("[Response] [{}], Headers : [{}], Body : [{}] ", response.getStatusCode(), response.getHeaders(), StreamUtils.copyToString(response.getBody(), Charset.defaultCharset()));
         }
 
         return response;
