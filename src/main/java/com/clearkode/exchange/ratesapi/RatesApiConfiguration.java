@@ -1,4 +1,4 @@
-package com.clearkode.exchange.config.fixer;
+package com.clearkode.exchange.ratesapi;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,16 +23,16 @@ import java.util.Collections;
 
 @Slf4j
 @Configuration
-@ConditionalOnMissingBean(FixerService.class)
-@EnableConfigurationProperties(FixerProperties.class)
+@ConditionalOnMissingBean(RatesApiService.class)
+@EnableConfigurationProperties(RatesApiProperties.class)
 @RequiredArgsConstructor(onConstructor = @__({@Autowired, @NotNull}))
-public class FixerConfiguration {
+public class RatesApiConfiguration {
 
-    private final FixerProperties properties;
+    private final RatesApiProperties properties;
 
     @Bean
     @ConditionalOnMissingBean
-    public FixerService fixerService(RestTemplateBuilder restTemplateBuilder) {
+    public RatesApiService ratesApiService(RestTemplateBuilder restTemplateBuilder) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();
@@ -48,10 +48,10 @@ public class FixerConfiguration {
                 .build();
 
         restTemplate.setRequestFactory(factory);
-        restTemplate.setMessageConverters(Arrays.asList(converter));
-        restTemplate.setInterceptors(Collections.singletonList(new FixerHttpRequestInterceptor(properties.getApiKey())));
-        restTemplate.setErrorHandler(new FixerResponseErrorHandler(objectMapper));
+        restTemplate.setMessageConverters(Collections.singletonList(converter));
+        restTemplate.setInterceptors(Collections.singletonList(new RatesApiHttpRequestInterceptor()));
+        restTemplate.setErrorHandler(new RatesApiResponseErrorHandler(objectMapper));
 
-        return new FixerService(restTemplate, objectMapper);
+        return new RatesApiService(restTemplate, objectMapper);
     }
 }

@@ -1,4 +1,4 @@
-package com.clearkode.exchange.config.fixer;
+package com.clearkode.exchange.ratesapi;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -6,15 +6,12 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 
-@ConfigurationProperties(prefix = "fixer")
+@ConfigurationProperties(prefix = "ratesapi")
 @Data
 @Validated
-public class FixerProperties {
+public class RatesApiProperties {
 
     @NotNull
     private String url;
-
-    @NotNull
-    private String apiKey;
 
 }

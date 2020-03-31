@@ -1,4 +1,4 @@
-package com.clearkode.exchange.config.fixer;
+package com.clearkode.exchange.ratesapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 
 @Slf4j
 @RequiredArgsConstructor
-public class FixerResponseErrorHandler extends DefaultResponseErrorHandler {
+public class RatesApiResponseErrorHandler extends DefaultResponseErrorHandler {
 
     private final ObjectMapper objectMapper;
 
@@ -29,6 +29,6 @@ public class FixerResponseErrorHandler extends DefaultResponseErrorHandler {
             }
         } catch (Exception ex) {
         }
-        throw new FixerException(response.getStatusCode(), message);
+        throw new RatesApiException(response.getStatusCode(), message);
     }
 }

@@ -1,4 +1,4 @@
-package com.clearkode.exchange.config.fixer;
+package com.clearkode.exchange.ratesapi;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,15 +15,12 @@ import java.nio.charset.Charset;
 
 @Slf4j
 @RequiredArgsConstructor
-public class FixerHttpRequestInterceptor implements ClientHttpRequestInterceptor {
-
-    private final String apiKey;
+public class RatesApiHttpRequestInterceptor implements ClientHttpRequestInterceptor {
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         HttpHeaders headers = request.getHeaders();
         headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-        headers.add("Authorization", apiKey);
 
         if (log.isInfoEnabled()) {
             log.info("[Request] [{}]  {}, Headers : [{}], Body : [{}]", request.getMethod(), request.getURI(), request.getHeaders(), new String(body, Charset.defaultCharset()));
