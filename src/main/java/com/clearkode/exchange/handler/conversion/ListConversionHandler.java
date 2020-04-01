@@ -1,5 +1,7 @@
 package com.clearkode.exchange.handler.conversion;
 
+import com.clearkode.exchange.entity.common.CommonAppException;
+import com.clearkode.exchange.entity.common.ErrorType;
 import com.clearkode.exchange.entity.transaction.Transaction;
 import com.clearkode.exchange.entity.transaction.TransactionSpec;
 import com.clearkode.exchange.handler.common.BaseHandler;
@@ -46,6 +48,9 @@ public class ListConversionHandler extends BaseHandler implements Handler<ListCo
         if (null != request.getTransactionId())
             specificationList.add(TransactionSpec.transactionId(request.getTransactionId()));
 
+        if(specificationList.isEmpty()) {
+            throw new CommonAppException(ErrorType.AT_LEAST_ONE_ELEMENT_HAS_TO_SELECTED);
+        }
         for (Specification<Transaction> specification : specificationList) {
             specifications = Objects.nonNull(specifications) ? specifications.and(specification) : Specification.where(specification);
         }
