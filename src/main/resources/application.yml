@@ -4,9 +4,9 @@ spring:
     username: postgres
     password: 123456
 
-#  flyway:
-#    enabled: true
-#    clean-disabled: false
+  flyway:
+    enabled: true
+    clean-disabled: false
 
   jpa:
     properties:
@@ -14,7 +14,7 @@ spring:
         temp:
           use_jdbc_metadata_defaults: false
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     generate-ddl: true
