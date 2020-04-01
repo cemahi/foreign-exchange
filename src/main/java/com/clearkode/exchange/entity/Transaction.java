@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Currency;
 
 @Getter
@@ -36,14 +37,15 @@ public class Transaction extends DomainEntity {
     private String description;
 
     public static Transaction Create(BigDecimal sourceAmount, BigDecimal targetAmount, Currency sourceCurrency,
-                                     Currency targetCurrency, String description, OperationType operation) {
+                                     Currency targetCurrency, OperationType operation) {
         Transaction transaction = new Transaction();
         transaction.sourceAmount = sourceAmount;
         transaction.targetAmount = targetAmount;
         transaction.sourceCurrency = sourceCurrency.toString();
         transaction.targetCurrency = targetCurrency.toString();
-        transaction.description = description;
         transaction.operation = operation;
+        transaction.setCreatedAt(LocalDateTime.now());
+        transaction.setUpdatedAt(LocalDateTime.now());
         return transaction;
     }
 }

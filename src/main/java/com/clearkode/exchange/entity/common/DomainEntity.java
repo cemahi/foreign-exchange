@@ -1,6 +1,7 @@
 package com.clearkode.exchange.entity.common;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,9 +21,11 @@ public abstract class DomainEntity {
     private UUID id;
 
     @CreatedDate
+    @Setter
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Setter
     private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
