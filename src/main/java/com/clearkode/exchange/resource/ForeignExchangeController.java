@@ -13,12 +13,15 @@ import com.clearkode.exchange.ratesapi.response.ExchangeCurrencyResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -43,8 +46,10 @@ public class ForeignExchangeController {
 
     @GetMapping("/conversion")
     public ResponseEntity<ListConversionResponse> getConversions(Pageable pageable,
-                                                                 @RequestParam(value = "bankAccountStatus", required = false) String bankAccountStatus) {
-        ListConversionRequest request = ListConversionRequest.create();
+                                                                 @RequestParam(value = "transactionId", required = false) UUID transactionId,
+                                                                 @RequestParam(value = "transactionDate", required = false)
+                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime transactionDate) {
+        ListConversionRequest request = ListConversionRequest.create(transactionId, transactionDate, pageable);
         return ResponseEntity.ok((ListConversionResponse)serviceExecuter.execute(listConversionHandler, request));
     }
 }
