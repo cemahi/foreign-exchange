@@ -1,6 +1,6 @@
 package com.clearkode.exchange.handler.conversion;
 
-import com.clearkode.exchange.entity.Transaction;
+import com.clearkode.exchange.entity.transaction.Transaction;
 import com.clearkode.exchange.entity.common.OperationType;
 import com.clearkode.exchange.handler.common.BaseHandler;
 import com.clearkode.exchange.handler.common.Handler;

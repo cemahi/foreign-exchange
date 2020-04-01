@@ -47,9 +47,11 @@ public class ForeignExchangeController {
     @GetMapping("/conversion")
     public ResponseEntity<ListConversionResponse> getConversions(Pageable pageable,
                                                                  @RequestParam(value = "transactionId", required = false) UUID transactionId,
-                                                                 @RequestParam(value = "transactionDate", required = false)
-                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime transactionDate) {
-        ListConversionRequest request = ListConversionRequest.create(transactionId, transactionDate, pageable);
+                                                                 @RequestParam(value = "startTransactionDate", required = false)
+                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTransactionDate,
+                                                                 @RequestParam(value = "startTransactionDate", required = false)
+                                                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTransactionDate) {
+        ListConversionRequest request = ListConversionRequest.create(transactionId, startTransactionDate, endTransactionDate, pageable);
         return ResponseEntity.ok((ListConversionResponse)serviceExecuter.execute(listConversionHandler, request));
     }
 }

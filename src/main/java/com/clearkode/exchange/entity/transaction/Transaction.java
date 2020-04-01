@@ -1,4 +1,4 @@
-package com.clearkode.exchange.entity;
+package com.clearkode.exchange.entity.transaction;
 
 import com.clearkode.exchange.entity.common.DomainEntity;
 import com.clearkode.exchange.entity.common.OperationType;

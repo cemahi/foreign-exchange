@@ -15,13 +15,16 @@ import java.util.UUID;
 public class ListConversionRequest extends BaseRequest {
 
     private UUID transactionId;
-    private LocalDateTime transactionDate;
+    private LocalDateTime startTransactionDate;
+    private LocalDateTime endTransactionDate;
     private Pageable pageable;
 
-    public static ListConversionRequest create(UUID transactionId, LocalDateTime transactionDate, Pageable pageable){
+    public static ListConversionRequest create(UUID transactionId, LocalDateTime startTransactionDate,
+                                               LocalDateTime endTransactionDate, Pageable pageable){
         ListConversionRequest request = new ListConversionRequest();
         request.setTransactionId(transactionId);
-        request.setTransactionDate(transactionDate);
+        request.setStartTransactionDate(startTransactionDate);
+        request.setEndTransactionDate(endTransactionDate);
         request.setPageable(pageable);
         return request;
     }
