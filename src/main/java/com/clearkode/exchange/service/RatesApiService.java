@@ -19,8 +19,7 @@ public class RatesApiService {
 
     public ExchangeCurrencyResponse getConversionRate(ExchangeCurrencyRequest request) throws RatesApiException {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromPath(latestRatePath + "base=" + request.getSource().toString() + "&symbols=" + request.getTarget().toString());
-        ExchangeCurrencyResponse response = restTemplate.getForObject(uriComponentsBuilder.build().toString(), ExchangeCurrencyResponse.class);
 
-        return response;
+        return restTemplate.getForObject(uriComponentsBuilder.build().toString(), ExchangeCurrencyResponse.class);
     }
 }
