@@ -1,7 +1,9 @@
 package com.clearkode.exchange;
 
 import com.clearkode.exchange.resource.request.ConversionRateRequest;
+import com.clearkode.exchange.resource.request.MakeConversionRequest;
 import com.clearkode.exchange.resource.response.ConversionRateResponse;
+import com.clearkode.exchange.resource.response.MakeConversionResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
@@ -14,6 +16,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Objects;
 
@@ -49,6 +52,24 @@ public class ForeignExchangeControllerTest {
 
 		Assert.assertSame(HttpStatus.OK, response.getStatusCode());
         Assert.assertNotNull(Objects.requireNonNull(response.getBody()).getRate());
+    }
+
+    @Test()
+    public void makeConversion_when_ServerRespondsWithTargetAmountAndTransactionInfo() throws JsonProcessingException {
+        MakeConversionRequest request = new MakeConversionRequest();
+        request.setSourceAmount(new BigDecimal(100));
+        request.setSourceCurrency(Currency.getInstance("GBP"));
+        request.setTargetCurrency(Currency.getInstance("USD"));
+
+        String requestJson = mapper.writeValueAsString(request);
+
+        entity = new HttpEntity<>(requestJson, headers);
+        ResponseEntity<MakeConversionResponse> response = restTemplate.exchange("/v1/conversion",
+                HttpMethod.POST, entity, MakeConversionResponse.class);
+
+        Assert.assertSame(HttpStatus.OK, response.getStatusCode());
+        Assert.assertNotNull(Objects.requireNonNull(response.getBody()).getTargetAmount());
+        Assert.assertNotNull(Objects.requireNonNull(response.getBody()).getTransactionId());
     }
 
     private HttpHeaders getHeader() {
