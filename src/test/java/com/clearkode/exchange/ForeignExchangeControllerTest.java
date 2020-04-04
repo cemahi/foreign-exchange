@@ -1,7 +1,7 @@
 package com.clearkode.exchange;
 
-import com.clearkode.exchange.ratesapi.request.ExchangeCurrencyRequest;
-import com.clearkode.exchange.ratesapi.response.ExchangeCurrencyResponse;
+import com.clearkode.exchange.resource.request.ConversionRateRequest;
+import com.clearkode.exchange.resource.response.ConversionRateResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
@@ -9,15 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Currency;
+import java.util.Objects;
 
-@AutoConfigureWebClient
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ForeignExchangeControllerTest {
@@ -28,7 +27,6 @@ public class ForeignExchangeControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
-    private String baseUrl = "/v1";
     private HttpHeaders headers;
     private HttpEntity<String> entity;
 
@@ -39,17 +37,18 @@ public class ForeignExchangeControllerTest {
 
     @Test()
     public void getConversionRate_when_ServerRespondsWithRate_ExchangeRateReturned() throws JsonProcessingException {
-        ExchangeCurrencyRequest request = new ExchangeCurrencyRequest();
+        ConversionRateRequest request = new ConversionRateRequest();
         request.setTarget(Currency.getInstance("USD"));
         request.setSource(Currency.getInstance("GBP"));
 
         String requestJson = mapper.writeValueAsString(request);
 
 		entity = new HttpEntity<>(requestJson, headers);
-		ResponseEntity<ExchangeCurrencyResponse> response = restTemplate.exchange(baseUrl + "/rate",
-				HttpMethod.POST, entity, ExchangeCurrencyResponse.class);
+		ResponseEntity<ConversionRateResponse> response = restTemplate.exchange("/v1/rate",
+				HttpMethod.POST, entity, ConversionRateResponse.class);
 
 		Assert.assertSame(HttpStatus.OK, response.getStatusCode());
+        Assert.assertNotNull(Objects.requireNonNull(response.getBody()).getRate());
     }
 
     private HttpHeaders getHeader() {

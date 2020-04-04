@@ -1,15 +1,15 @@
 package com.clearkode.exchange.resource;
 
 import com.clearkode.exchange.handler.common.TraceableHandlerService;
+import com.clearkode.exchange.handler.conversion.ConversionRateHandler;
 import com.clearkode.exchange.handler.conversion.ListConversionHandler;
 import com.clearkode.exchange.handler.conversion.MakeConversionHandler;
-import com.clearkode.exchange.ratesapi.request.ListConversionRequest;
-import com.clearkode.exchange.ratesapi.request.MakeConversionRequest;
-import com.clearkode.exchange.ratesapi.response.ListConversionResponse;
-import com.clearkode.exchange.ratesapi.response.MakeConversionResponse;
-import com.clearkode.exchange.service.RatesApiService;
-import com.clearkode.exchange.ratesapi.request.ExchangeCurrencyRequest;
-import com.clearkode.exchange.ratesapi.response.ExchangeCurrencyResponse;
+import com.clearkode.exchange.resource.request.ConversionRateRequest;
+import com.clearkode.exchange.resource.request.ListConversionRequest;
+import com.clearkode.exchange.resource.request.MakeConversionRequest;
+import com.clearkode.exchange.resource.response.ConversionRateResponse;
+import com.clearkode.exchange.resource.response.ListConversionResponse;
+import com.clearkode.exchange.resource.response.MakeConversionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +29,14 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor = @__({@Autowired, @NotNull}))
 public class ForeignExchangeController {
 
-    private final RatesApiService ratesApiService;
     private final TraceableHandlerService serviceExecuter;
     private final MakeConversionHandler makeConversionHandler;
     private final ListConversionHandler listConversionHandler;
+    private final ConversionRateHandler conversionRateHandler;
 
     @PostMapping("/rate")
-    public ResponseEntity<ExchangeCurrencyResponse> getConversionRate(@Valid @RequestBody ExchangeCurrencyRequest request) {
-        return ResponseEntity.ok(ratesApiService.getConversionRate(request));
+    public ResponseEntity<ConversionRateResponse> getConversionRate(@Valid @RequestBody ConversionRateRequest request) {
+        return ResponseEntity.ok((ConversionRateResponse)serviceExecuter.execute(conversionRateHandler, request));
     }
 
     @PostMapping("/conversion")

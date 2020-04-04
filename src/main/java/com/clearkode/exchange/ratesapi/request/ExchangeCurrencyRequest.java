@@ -17,4 +17,12 @@ public class ExchangeCurrencyRequest {
 
     @NotNull
     private Currency target;
+
+    public static ExchangeCurrencyRequest create(Currency source, Currency target){
+        ExchangeCurrencyRequest request = new ExchangeCurrencyRequest();
+        request.setSource(source);
+        request.setTarget(target);
+
+        return request;
+    }
 }

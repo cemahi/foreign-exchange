@@ -1,4 +1,4 @@
-package com.clearkode.exchange.ratesapi.response;
+package com.clearkode.exchange.resource.response;
 
 import com.clearkode.exchange.handler.common.BaseResponse;;
 import lombok.AllArgsConstructor;

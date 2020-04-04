@@ -1,4 +1,4 @@
-package com.clearkode.exchange.ratesapi.request;
+package com.clearkode.exchange.resource.request;
 
 import com.clearkode.exchange.handler.common.BaseRequest;
 import lombok.AllArgsConstructor;

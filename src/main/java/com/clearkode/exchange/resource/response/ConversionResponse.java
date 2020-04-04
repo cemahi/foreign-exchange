@@ -1,4 +1,4 @@
-package com.clearkode.exchange.ratesapi.response;
+package com.clearkode.exchange.resource.response;
 
 import com.clearkode.exchange.entity.transaction.Transaction;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Currency;
 import java.util.UUID;
 
 @Data
