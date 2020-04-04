@@ -1,8 +1,10 @@
 package com.clearkode.exchange;
 
 import com.clearkode.exchange.resource.request.ConversionRateRequest;
+import com.clearkode.exchange.resource.request.ListConversionRequest;
 import com.clearkode.exchange.resource.request.MakeConversionRequest;
 import com.clearkode.exchange.resource.response.ConversionRateResponse;
+import com.clearkode.exchange.resource.response.ListConversionResponse;
 import com.clearkode.exchange.resource.response.MakeConversionResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -55,7 +58,7 @@ public class ForeignExchangeControllerTest {
     }
 
     @Test()
-    public void makeConversion_when_ServerRespondsWithTargetAmountAndTransactionInfo() throws JsonProcessingException {
+    public void makeConversion_when_ServerRespondsWithTargetAmountAndTransactionId() throws JsonProcessingException {
         MakeConversionRequest request = new MakeConversionRequest();
         request.setSourceAmount(new BigDecimal(100));
         request.setSourceCurrency(Currency.getInstance("GBP"));
@@ -70,6 +73,25 @@ public class ForeignExchangeControllerTest {
         Assert.assertSame(HttpStatus.OK, response.getStatusCode());
         Assert.assertNotNull(Objects.requireNonNull(response.getBody()).getTargetAmount());
         Assert.assertNotNull(Objects.requireNonNull(response.getBody()).getTransactionId());
+    }
+
+    @Test()
+    public void getConversions_when_ServerRespondsWithTransactionInfo() throws JsonProcessingException {
+        MakeConversionRequest makeConversionRequest = new MakeConversionRequest();
+        makeConversionRequest.setSourceAmount(new BigDecimal(100));
+        makeConversionRequest.setSourceCurrency(Currency.getInstance("GBP"));
+        makeConversionRequest.setTargetCurrency(Currency.getInstance("USD"));
+
+        entity = new HttpEntity<>(mapper.writeValueAsString(makeConversionRequest), headers);
+        ResponseEntity<MakeConversionResponse> makeConversionResponse = restTemplate.exchange("/v1/conversion",
+                HttpMethod.POST, entity, MakeConversionResponse.class);
+
+        entity = new HttpEntity<>(headers);
+        String url = "/v1/conversion?transactionId=" + Objects.requireNonNull(makeConversionResponse.getBody()).getTransactionId();
+        ResponseEntity<String> response = restTemplate.exchange(url,
+                HttpMethod.GET, entity, String.class);
+
+       Assert.assertSame(HttpStatus.OK, response.getStatusCode());
     }
 
     private HttpHeaders getHeader() {
