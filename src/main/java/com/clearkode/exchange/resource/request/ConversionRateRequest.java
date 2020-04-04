@@ -1,16 +1,15 @@
 package com.clearkode.exchange.resource.request;
 
 import com.clearkode.exchange.handler.common.BaseRequest;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Currency;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class ConversionRateRequest extends BaseRequest {
 
     @NotNull

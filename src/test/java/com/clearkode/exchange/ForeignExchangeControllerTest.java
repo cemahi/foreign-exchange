@@ -1,10 +1,9 @@
 package com.clearkode.exchange;
 
+import com.clearkode.exchange.entity.common.CommonAppException;
 import com.clearkode.exchange.resource.request.ConversionRateRequest;
-import com.clearkode.exchange.resource.request.ListConversionRequest;
 import com.clearkode.exchange.resource.request.MakeConversionRequest;
 import com.clearkode.exchange.resource.response.ConversionRateResponse;
-import com.clearkode.exchange.resource.response.ListConversionResponse;
 import com.clearkode.exchange.resource.response.MakeConversionResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -92,6 +90,14 @@ public class ForeignExchangeControllerTest {
                 HttpMethod.GET, entity, String.class);
 
        Assert.assertSame(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void getConversions_when_atLeastOneElementIsRequire(){
+        ResponseEntity<String> response = restTemplate.exchange("/v1/conversion", HttpMethod.GET,
+                new HttpEntity<>(headers), String.class);
+
+        Assert.assertSame(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     private HttpHeaders getHeader() {
