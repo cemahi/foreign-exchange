@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/exchange
-    username: postgres
-    password: 123456
+    url: jdbc:postgresql://ec2-3-231-16-122.compute-1.amazonaws.com:5432/d6fuheemue4uul
+    username: dewfcanwqnhmnz
+    password: 6bc2de3321aa5e09406be9fe88424bd3e5877bcc2226eda643eaee5bd7f4581f
 
   flyway:
     enabled: true
-    clean-disabled: false
+    clean-disabled: true
 
   jpa:
     properties:
